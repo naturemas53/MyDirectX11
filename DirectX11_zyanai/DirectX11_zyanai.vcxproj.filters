@@ -13,23 +13,92 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\Device">
+      <UniqueIdentifier>{f5153551-31ea-4baf-90bc-668618449b81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Device">
+      <UniqueIdentifier>{1ea067da-19d1-4785-af25-31debe92c21e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{5c74855a-d08a-44f1-bfed-da6ec98d74a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Scene">
+      <UniqueIdentifier>{d58226eb-2f6f-40a4-91ff-eebc0e8716c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Scene\MakeScene">
+      <UniqueIdentifier>{12d8cab3-42a8-466d-b074-3ecc1c5ddf25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Shader">
+      <UniqueIdentifier>{7fdd0504-3151-46fa-9205-b5af34c694f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Shader">
+      <UniqueIdentifier>{0f7f3baa-ddaf-4846-acb2-4fc18c55aad2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\VertexBuffer">
+      <UniqueIdentifier>{a56e6b8b-9a9e-41c1-be2a-b97416bb057b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectX11_Framework\Device.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="DirectX11_Framework\Device\Device.cpp">
+      <Filter>ソース ファイル\Device</Filter>
     </ClCompile>
     <ClCompile Include="DirectX11_Framework\Device\Graphics.cpp">
+      <Filter>ソース ファイル\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Scene\SampleScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Shader\PixelShader.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Shader\ShaderParamater.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Shader\VertexShader.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\VertexBuffer\CVertexBuffer.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Square.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Scene\SceneContext.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirectX11_Framework\Device.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="DirectX11_Framework\Device\Device.h">
+      <Filter>ヘッダー ファイル\Device</Filter>
     </ClInclude>
     <ClInclude Include="DirectX11_Framework\Device\Graphics.h">
+      <Filter>ヘッダー ファイル\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Scene\IScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Scene\SceneContext.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Scene\SampleScene.h">
+      <Filter>ヘッダー ファイル\Scene\MakeScene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Shader\Shader.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Shader\ShaderParamater.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\VertexBuffer\VertexBuffer.h">
+      <Filter>ヘッダー ファイル\VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\VertexBuffer\VertexData.h">
+      <Filter>ヘッダー ファイル\VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Square.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

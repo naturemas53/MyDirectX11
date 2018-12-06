@@ -1,6 +1,9 @@
 #include <Windows.h>
-#include "DirectX11_Framework/Device.h"
+#include "DirectX11_Framework/Device/Device.h"
 #include "DirectX11_Framework/Device/Graphics.h"
+
+#include "DirectX11_Framework/Scene/SceneContext.h"
+#include "DirectX11_Framework/Scene/SampleScene.h"
 
 //ウィンドウ横幅
 #define WIDTH 1280
@@ -21,6 +24,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
 			}
 
 			DX11_GRAPHIC.Initialize();
+			SCENEMANAGER.SetScene(new MyDirectX11::SampleScene());
 
 			break;
 
@@ -128,7 +132,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			// メッセージがなくなったら、ゲームを処理する ※ここで、ゲームを処理する関数の呼び出しを行います
 
-			DX11_GRAPHIC.Render();
+			DX11_GRAPHIC.Clear();
+
+			SCENEMANAGER.Update();
+
+			DX11_GRAPHIC.ScreenSwap();
 
 		}
 

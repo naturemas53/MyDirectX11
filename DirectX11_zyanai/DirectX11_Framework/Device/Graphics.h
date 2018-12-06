@@ -1,7 +1,13 @@
 #pragma once
 #include <d3d11.h>
+#include <list>
 
 namespace MyDirectX11 {
+
+	class CVertexBuffer;
+	class CVertexShader;
+	class CPixelShader;
+	class ShaderParamater;
 
 	class Graphics final {
 
@@ -18,8 +24,19 @@ namespace MyDirectX11 {
 		bool Initialize();
 		void Release();
 
-		void Render();
+		void Clear();
 
+		void ScreenSwap();
+
+		//CVertexBuffer* CreateVertexBuffer();
+
+		CVertexShader* CreateVertexShader(void* shaderCode, size_t shaderSize,
+										 D3D11_INPUT_ELEMENT_DESC* elementDescs = nullptr,int elementDescCount = 0);
+
+		CPixelShader*  CreatePixelShader (void* shaderCode, size_t shaderSize,
+										 D3D11_INPUT_ELEMENT_DESC* elementDescs = nullptr, int elementDescCount = 0);
+
+		ShaderParamater* CreateShaderParamater(size_t paramaterSize);
 
 		inline void SafeRelease(IUnknown* pointer) { 
 			
@@ -34,17 +51,6 @@ namespace MyDirectX11 {
 
 		Graphics();
 
-		//描画するポリゴンデータとそのデータの形式
-		ID3D11Buffer*			pVertexBuffer_;
-		ID3D11InputLayout*		pInputLayout_;
-
-		//シェーダー関連(現在持っている方)
-		ID3D11VertexShader*		pVertexShader_;
-		ID3D11PixelShader*		pPixelShader_;
-
-		//定数バッファ
-		ID3D11Buffer* pConstantBuffer_;
-
 		//ビューポート
 		D3D11_VIEWPORT			viewport_;
 		
@@ -53,6 +59,10 @@ namespace MyDirectX11 {
 		ID3D11Texture2D*		pDepthStencil_;
 		ID3D11DepthStencilView* pDepthStencilView_;
 
+		std::list<CVertexBuffer*>	vertexBuffers_;
+		std::list<CVertexShader*>	vertexShaders_;
+		std::list<CPixelShader*>	pixelShaders_;
+		std::list<ShaderParamater*> shaderParamaters_;
 
 	};
 
