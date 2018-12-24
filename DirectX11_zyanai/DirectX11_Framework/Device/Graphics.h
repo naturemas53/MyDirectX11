@@ -1,6 +1,8 @@
 #pragma once
 #include <d3d11.h>
 #include <list>
+#include <string>
+#include <map>
 
 namespace MyDirectX11 {
 
@@ -8,6 +10,8 @@ namespace MyDirectX11 {
 	class CVertexShader;
 	class CPixelShader;
 	class ShaderParamater;
+	class Texture;
+	class Image;
 
 	class Graphics final {
 
@@ -38,6 +42,8 @@ namespace MyDirectX11 {
 
 		ShaderParamater* CreateShaderParamater(size_t paramaterSize);
 
+		Texture*		 CreateTexture(std::string path);
+
 		inline void SafeRelease(IUnknown* pointer) { 
 			
 			if (pointer == nullptr) return;
@@ -59,10 +65,14 @@ namespace MyDirectX11 {
 		ID3D11Texture2D*		pDepthStencil_;
 		ID3D11DepthStencilView* pDepthStencilView_;
 
+		//‚Å‚à‚±‚¢‚Â‚ÍƒuƒŒƒ“ƒhŒn
+		ID3D11BlendState* pBlendState_;
+
 		std::list<CVertexBuffer*>	vertexBuffers_;
 		std::list<CVertexShader*>	vertexShaders_;
 		std::list<CPixelShader*>	pixelShaders_;
 		std::list<ShaderParamater*> shaderParamaters_;
+		std::map <Texture*, Image*>  textures_;
 
 	};
 

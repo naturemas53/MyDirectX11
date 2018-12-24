@@ -145,24 +145,35 @@
   <ItemGroup>
     <ClCompile Include="DirectX11_Framework\Device\Device.cpp" />
     <ClCompile Include="DirectX11_Framework\Device\Graphics.cpp" />
+    <ClCompile Include="DirectX11_Framework\Image\BMPImage.cpp" />
+    <ClCompile Include="DirectX11_Framework\Image\Loader\BMP\BMPHeaderDatas.cpp" />
+    <ClCompile Include="DirectX11_Framework\Image\Loader\BMP\BMPImageDatas.cpp" />
+    <ClCompile Include="DirectX11_Framework\Image\Loader\BMP\ReadBMPImage.cpp" />
     <ClCompile Include="DirectX11_Framework\Scene\SampleScene.cpp" />
     <ClCompile Include="DirectX11_Framework\Scene\SceneContext.cpp" />
     <ClCompile Include="DirectX11_Framework\Shader\PixelShader.cpp" />
     <ClCompile Include="DirectX11_Framework\Shader\ShaderParamater.cpp" />
     <ClCompile Include="DirectX11_Framework\Shader\VertexShader.cpp" />
     <ClCompile Include="DirectX11_Framework\Square.cpp" />
+    <ClCompile Include="DirectX11_Framework\Texture\Texture.cpp" />
     <ClCompile Include="DirectX11_Framework\VertexBuffer\CVertexBuffer.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectX11_Framework\Device\Device.h" />
     <ClInclude Include="DirectX11_Framework\Device\Graphics.h" />
+    <ClInclude Include="DirectX11_Framework\Image\BMPImage.h" />
+    <ClInclude Include="DirectX11_Framework\Image\Image.h" />
+    <ClInclude Include="DirectX11_Framework\Image\Loader\BMP\BMPHeaderDatas.h" />
+    <ClInclude Include="DirectX11_Framework\Image\Loader\BMP\BMPImageDatas.h" />
+    <ClInclude Include="DirectX11_Framework\Image\Loader\BMP\ReadBMPImage.h" />
     <ClInclude Include="DirectX11_Framework\Scene\IScene.h" />
     <ClInclude Include="DirectX11_Framework\Scene\SampleScene.h" />
     <ClInclude Include="DirectX11_Framework\Scene\SceneContext.h" />
     <ClInclude Include="DirectX11_Framework\Shader\Shader.h" />
     <ClInclude Include="DirectX11_Framework\Shader\ShaderParamater.h" />
     <ClInclude Include="DirectX11_Framework\Square.h" />
+    <ClInclude Include="DirectX11_Framework\Texture\Texture.h" />
     <ClInclude Include="DirectX11_Framework\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="DirectX11_Framework\VertexBuffer\VertexData.h" />
   </ItemGroup>

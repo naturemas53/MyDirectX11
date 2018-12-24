@@ -5,10 +5,14 @@
 #include "../Square.h"
 #include "../Shader/Shader.h"
 #include "../Shader/ShaderParamater.h"
+#include "../Texture/Texture.h"
 
-#include "../../Shader/Compiled/vs_screen.h"
+//#include "../../Shader/Compiled/vs_screen.h"
 //#include "../../Shader/Compiled/vs_sample.h"
-#include "../../Shader/Compiled/ps_sample.h"
+//#include "../../Shader/Compiled/ps_sample.h"
+
+#include "../../Shader/Compiled/ps_enableTexture.h"
+#include "../../Shader/Compiled/vs_enableTexture.h"
 
 #include <DirectXMath.h>
 
@@ -56,6 +60,11 @@ bool SampleScene::Initialize() {
 
 	this->shaderParamater_->SetParamaterToShader(this->vertexShader_,pDeviceContext);
 
+	this->texture_ = DX11_GRAPHIC.CreateTexture("halohalo.bmp");
+	this->texture_->AttachThisTextureToPS(pDeviceContext);
+
+
+
 	return true;
 
 }
@@ -70,7 +79,7 @@ void SampleScene::Update() {
 
 	Vector3 pos = this->square_->GetPosision();
 
-	pos += Vector3(20.0f,0.0f,0.0f);
+	pos += Vector3(0.0f,0.0f,0.0f);
 
 	this->square_->SetPosition(pos);
 

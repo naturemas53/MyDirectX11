@@ -36,6 +36,37 @@ namespace MyDirectX11 {
 
 	};
 
+
+	struct Vector2 {
+
+		Vector2() {};
+		Vector2(float x, float y) {
+
+			this->x = x;
+			this->y = y;
+
+		}
+
+		MyDirectX11::Vector2& operator +(const MyDirectX11::Vector2 aite) {
+
+			this->x += aite.x;
+			this->y += aite.y;
+
+			return *this;
+
+		}
+
+		MyDirectX11::Vector2& operator +=(const MyDirectX11::Vector2 aite) {
+
+			return operator+(aite);
+
+		}
+
+		float x = 0;
+		float y = 0;
+
+	};
+
 	struct Color {
 
 		Color() {};
@@ -57,16 +88,14 @@ namespace MyDirectX11 {
 
 	struct VertexData {
 
-		VertexData(Vector3 pos ,Color color) {
+		VertexData(Vector3 pos ,Vector2 uv) {
 
 			this->pos_[0] = pos.x;
 			this->pos_[1] = pos.y;
 			this->pos_[2] = pos.z;
 
-			this->color_[0] = color.r;
-			this->color_[1] = color.g;
-			this->color_[2] = color.b;
-			this->color_[3] = color.a;
+			this->uv_[0] = uv.x;
+			this->uv_[1] = uv.y;
 
 		}
 
@@ -76,18 +105,16 @@ namespace MyDirectX11 {
 			this->pos_[1] = 0;
 			this->pos_[2] = 0;
 
-			this->color_[0] = 0;
-			this->color_[1] = 0;
-			this->color_[2] = 0;
-			this->color_[3] = 0;
+			this->uv_[0] = 0;
+			this->uv_[1] = 0;
 
 		}
 
 		static void GetElementDescs(D3D11_INPUT_ELEMENT_DESC** pOutDescs,int* descCount) {
 
 			static D3D11_INPUT_ELEMENT_DESC elementDescs[] = {
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,							   0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT   ,	 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 			};
 
 			*pOutDescs = elementDescs;
@@ -96,7 +123,7 @@ namespace MyDirectX11 {
 		}
 
 		float pos_[3] = {};
-		float color_[4] = {};
+		float uv_[2] = {};
 
 	};
 

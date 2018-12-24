@@ -37,6 +37,30 @@
     <Filter Include="ヘッダー ファイル\VertexBuffer">
       <UniqueIdentifier>{a56e6b8b-9a9e-41c1-be2a-b97416bb057b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Image">
+      <UniqueIdentifier>{b9dff2a0-5efb-441a-a4a9-2c178ed3026c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Image\Loader">
+      <UniqueIdentifier>{0ecda86c-4447-49c2-bca5-ed2d8065004c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Image\Loader\BMP">
+      <UniqueIdentifier>{a99a51cd-7333-4124-b31d-e789490251b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Image">
+      <UniqueIdentifier>{52aa5ee7-cc58-4056-9966-2dbb20dfd41a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Image\Loader">
+      <UniqueIdentifier>{e59ac57b-6a10-46d8-9ce0-eccd7c29efb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Image\Loader\BMP">
+      <UniqueIdentifier>{eabb5721-3840-4e9d-913a-0341c9e07f51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Texture">
+      <UniqueIdentifier>{200d1802-363f-4e74-802c-a5fa11bd8134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Texture">
+      <UniqueIdentifier>{0a3ff9a2-8ae1-441c-a2d0-37b95bbd7cbb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -69,6 +93,21 @@
     <ClCompile Include="DirectX11_Framework\Scene\SceneContext.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Image\Loader\BMP\BMPHeaderDatas.cpp">
+      <Filter>ソース ファイル\Image\Loader\BMP</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Image\Loader\BMP\BMPImageDatas.cpp">
+      <Filter>ソース ファイル\Image\Loader\BMP</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Image\Loader\BMP\ReadBMPImage.cpp">
+      <Filter>ソース ファイル\Image\Loader\BMP</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Image\BMPImage.cpp">
+      <Filter>ソース ファイル\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11_Framework\Texture\Texture.cpp">
+      <Filter>ソース ファイル\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectX11_Framework\Device\Device.h">
@@ -100,6 +139,24 @@
     </ClInclude>
     <ClInclude Include="DirectX11_Framework\Square.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Image\Image.h">
+      <Filter>ヘッダー ファイル\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Image\BMPImage.h">
+      <Filter>ヘッダー ファイル\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Image\Loader\BMP\BMPHeaderDatas.h">
+      <Filter>ヘッダー ファイル\Image\Loader\BMP</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Image\Loader\BMP\BMPImageDatas.h">
+      <Filter>ヘッダー ファイル\Image\Loader\BMP</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Image\Loader\BMP\ReadBMPImage.h">
+      <Filter>ヘッダー ファイル\Image\Loader\BMP</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11_Framework\Texture\Texture.h">
+      <Filter>ヘッダー ファイル\Texture</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

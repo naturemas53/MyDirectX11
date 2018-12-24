@@ -7,6 +7,7 @@ namespace MyDirectX11 {
 	class CVertexShader;
 	class CPixelShader;
 	class ShaderParamater;
+	class Texture;
 
 	class SampleScene final : public IScene{
 
@@ -26,6 +27,7 @@ namespace MyDirectX11 {
 		CVertexShader*   vertexShader_;
 		CPixelShader*    pixelShader_;
 		ShaderParamater* shaderParamater_;
+		Texture* texture_;
 
 	};
 

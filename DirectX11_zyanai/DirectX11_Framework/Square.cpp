@@ -28,18 +28,18 @@ void Square::Initialize(ID3D11Device* pDevice) {
 	
 	Vector3 vertexPos = this->pos_;
 
-	this->vertexs_[0] = VertexData(vertexPos, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	this->vertexs_[0] = VertexData(vertexPos, Vector2(0.0f,0.0f));
 
 	vertexPos.x += this->sizeX_;
-	this->vertexs_[1] = VertexData(vertexPos, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	this->vertexs_[1] = VertexData(vertexPos, Vector2(1.0f, 0.0f));
 
 	vertexPos.y += this->sizeY_;
-	this->vertexs_[2] = VertexData(vertexPos, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	this->vertexs_[2] = VertexData(vertexPos, Vector2(1.0f, 1.0f));
 
 	this->vertexs_[3] = this->vertexs_[2];
 	
 	vertexPos.x -= this->sizeX_;
-	this->vertexs_[4] = VertexData(vertexPos, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	this->vertexs_[4] = VertexData(vertexPos, Vector2(0.0f, 1.0f));
 	this->vertexs_[5] = this->vertexs_[0];
 
 	D3D11_BUFFER_DESC bufferDesc;
@@ -66,18 +66,18 @@ void Square::Draw(ID3D11DeviceContext* pDeviceContext) {
 
 	Vector3 vertexPos = this->pos_;
 
-	this->vertexs_[0] = VertexData(vertexPos, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	this->vertexs_[0] = VertexData(vertexPos, Vector2(0.0f, 0.0f));
 
 	vertexPos.x += this->sizeX_;
-	this->vertexs_[1] = VertexData(vertexPos, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	this->vertexs_[1] = VertexData(vertexPos, Vector2(1.0f, 0.0f));
 
 	vertexPos.y += this->sizeY_;
-	this->vertexs_[2] = VertexData(vertexPos, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	this->vertexs_[2] = VertexData(vertexPos, Vector2(1.0f, 1.0f));
 
 	this->vertexs_[3] = this->vertexs_[2];
 
 	vertexPos.x -= this->sizeX_;
-	this->vertexs_[4] = VertexData(vertexPos, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	this->vertexs_[4] = VertexData(vertexPos, Vector2(0.0f, 1.0f));
 	this->vertexs_[5] = this->vertexs_[0];
 
 	ID3D11Buffer* pDX11Buffer = this->pVertexBuffer_->GetDX11Buffer();

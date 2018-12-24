@@ -4,6 +4,9 @@
 #include "../VertexBuffer/VertexBuffer.h"
 #include "../Shader/Shader.h"
 #include "../Shader/ShaderParamater.h"
+#include "../Texture/Texture.h"
+#include "../Image/BMPImage.h"
+#include "../Image/Loader/BMP/ReadBMPImage.h"
 
 #include <atltypes.h>
 #include <DirectXMath.h>
@@ -57,45 +60,6 @@ bool Graphics::Initialize() {
 	dsDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	dsDesc.Texture2D.MipSlice = 0;
 	pDevice->CreateDepthStencilView(this->pDepthStencil_, &dsDesc, &this->pDepthStencilView_);
-
-	//struct Vertex {
-	//	float pos[3];
-	//	float col[4];
-	//};
-
-	//Vertex g_VertexList[]{
-	//		{ { -0.5f,  0.5f, 0.5f }, { 1.0f, 0.0f, 0.0f, 1.0f } },
-	//		{ {  0.5f, -0.5f, 0.5f }, { 0.0f, 1.0f, 0.0f, 1.0f } },
-	//		{ { -0.5f, -0.5f, 0.5f }, { 0.0f, 0.0f, 1.0f, 1.0f } }
-	//};
-
-	//D3D11_BUFFER_DESC bufferDesc;
-	//bufferDesc.ByteWidth = sizeof(Vertex) * 3;
-	//bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	//bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	//bufferDesc.CPUAccessFlags = 0;
-	//bufferDesc.MiscFlags = 0;
-	//bufferDesc.StructureByteStride = 0;
-
-	//D3D11_SUBRESOURCE_DATA subResourceData;
-	//subResourceData.pSysMem = g_VertexList;
-	//subResourceData.SysMemPitch = 0;
-	//subResourceData.SysMemSlicePitch = 0;
-
-	//pDevice->CreateBuffer(&bufferDesc, &subResourceData, &this->pVertexBuffer_);
-
-	//D3D11_INPUT_ELEMENT_DESC g_VertexDesc[]{
-	//{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,                            0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	//{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	//};
-
-	//pDevice->CreateInputLayout(g_VertexDesc, ARRAYSIZE(g_VertexDesc),
-	//						   g_vs_main, sizeof(g_vs_main),
-	//						   &this->pInputLayout_);
-
-	//pDevice->CreateVertexShader(&g_vs_main, sizeof(g_vs_main), NULL, &this->pVertexShader_);
-
-	//pDevice->CreatePixelShader(&g_ps_main, sizeof(g_ps_main), NULL, &this->pPixelShader_);
 	
 	HWND hwnd = DX11_DEVICE.GetHWnd();
 	CRect rect;
@@ -110,6 +74,27 @@ bool Graphics::Initialize() {
 	pDeviceContext->RSSetViewports(1,&this->viewport_);
 
 	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+
+	D3D11_BLEND_DESC BlendDesc;
+	ZeroMemory(&BlendDesc, sizeof(BlendDesc));
+	BlendDesc.AlphaToCoverageEnable = FALSE;
+	BlendDesc.IndependentBlendEnable = FALSE;
+	BlendDesc.RenderTarget[0].BlendEnable = TRUE;
+	//こっちはいいでしょ
+	BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	//転送先の色は　「1 - ソースもとのアルファ」% の色にしてよ　ってことらしい
+	BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	//１になるようにしないと面白い
+	BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	pDevice->CreateBlendState(&BlendDesc, &this->pBlendState_);
+	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	pDeviceContext->OMSetBlendState(this->pBlendState_, blendFactor, 0xffffffff);
 
 	return true;
 
@@ -184,6 +169,76 @@ ShaderParamater* Graphics::CreateShaderParamater(size_t paramaterSize) {
 
 }
 
+Texture* Graphics::CreateTexture(std::string path) {
+
+	ID3D11Device* pDevice = DX11_DEVICE.GetDevice();
+
+	BYTE* pImageData = nullptr;
+	int imageDataLength = 0;
+	BMPData optionData;
+	::ZeroMemory(&optionData,sizeof(BMPData));
+
+	ReadBMPImage readBmp = ReadBMPImage();
+	readBmp.ReadImageToPath(path,&pImageData,&imageDataLength,optionData);
+
+	Image* image = new BMPImage(pImageData,imageDataLength,optionData);
+
+	D3D11_TEXTURE2D_DESC desc;
+	desc.Width = image->GetWidth();
+	desc.Height = image->GetHeight();
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	desc.SampleDesc.Count = 1;
+	desc.SampleDesc.Quality = 0;
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	desc.CPUAccessFlags = 0;
+	desc.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA initData;
+	initData.pSysMem = image->GetData();
+	initData.SysMemPitch = image->GetWidthStride();
+	initData.SysMemSlicePitch = image->GetSize();
+
+	ID3D11Texture2D* pTexture = nullptr;
+
+	pDevice->CreateTexture2D(&desc,&initData,&pTexture);
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
+	SRVDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	SRVDesc.Texture2D.MipLevels = 1;
+
+	ID3D11ShaderResourceView* pSRV;
+	pDevice->CreateShaderResourceView(pTexture,&SRVDesc,&pSRV);
+
+	D3D11_SAMPLER_DESC samplerDesc;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = 0;
+	samplerDesc.BorderColor[1] = 0;
+	samplerDesc.BorderColor[2] = 0;
+	samplerDesc.BorderColor[3] = 0;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	ID3D11SamplerState* pSampler = nullptr;
+	pDevice->CreateSamplerState(&samplerDesc,&pSampler);
+
+	Texture* pMyDXTexture = new Texture(pTexture,pSRV,pSampler);
+
+	this->textures_[pMyDXTexture] = image;
+
+	return pMyDXTexture;
+
+}
+
 void Graphics::Release() {
 
 	for (auto data : this->vertexBuffers_) {
@@ -231,6 +286,24 @@ void Graphics::Release() {
 
 	this->shaderParamaters_.clear();
 
+	for (auto pair : this->textures_) {
+
+		Texture* tex = pair.first;
+
+		tex->GetTexture()->Release();
+		tex->GetSRV()->Release();
+		tex->GetSamplerState()->Release();
+
+		delete tex;
+
+		Image* image = pair.second;
+		delete image;
+
+	}
+
+	this->textures_.clear();
+
+	SafeRelease(this->pBlendState_);
 	SafeRelease(this->pRenderTargetView_);
 
 	SafeRelease(this->pDepthStencilView_);
@@ -249,24 +322,6 @@ void Graphics::Clear() {
 	pDeviceContext->ClearDepthStencilView(this->pDepthStencilView_, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 }
-
-//void Graphics::Render() {
-//
-//	ID3D11DeviceContext* pDeviceContext = DX11_DEVICE.GetDeviceContext();
-//
-//
-//	UINT strides = sizeof(Vertex);
-//	UINT offsets = 0;
-//	pDeviceContext->IASetInputLayout(this->pInputLayout_);
-//	pDeviceContext->IASetVertexBuffers(0, 1, &this->pVertexBuffer_, &strides, &offsets);
-//	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-//	pDeviceContext->VSSetShader(this->pVertexShader_, NULL, 0);
-//	pDeviceContext->RSSetViewports(1, &this->viewport_);
-//	pDeviceContext->PSSetShader(this->pPixelShader_, NULL, 0);
-//
-//	pDeviceContext->Draw(3, 0);
-//
-//}
 
 void Graphics::ScreenSwap() {
 
